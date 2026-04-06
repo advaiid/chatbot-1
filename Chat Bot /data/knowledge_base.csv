@@ -1,0 +1,7 @@
+id,category,intent,canonical_question,keywords,response,language,tags,last_updated
+KB_001,Examination Policy,exam schedule,When is the end-semester exam scheduled?,"exam, end-sem, schedule",The end-semester examination schedule will be announced on the student portal.,English,"assessment, policy",2026-04-04
+KB_002,Examination Policy,exam schedule,അവസാന സെമസ്റ്റർ പരീക്ഷ എപ്പോഴാണ്?,"പരീക്ഷ, exam, schedule",അവസാന സെമസ്റ്റർ പരീക്ഷാ ഷെഡ്യൂൾ വിദ്യാർത്ഥി പോർട്ടലിൽ പ്രഖ്യാപിക്കും.,Malayalam,"assessment, policy",2026-04-06
+KB_003,Attendance,attendance requirement,What is the minimum attendance required?,"attendance, minimum, percentage",A minimum of 75% attendance is required to appear for the final examinations.,English,"attendance, regulation",2026-04-06
+KB_004,Attendance,attendance requirement,കുറഞ്ഞത് എത്ര ശതമാനം ഹാജർ വേണം?,"ഹാജർ, attendance, percentage",ഫൈനൽ പരീക്ഷ എഴുതാൻ കുറഞ്ഞത് 75% ഹാജർ നിർബന്ധമാണ്.,Malayalam,"attendance, regulation",2026-04-06
+KB_005,Faculty Contact,office hours,How can I contact my professor?,"contact, faculty, meet, professor",You can meet the faculty during their designated office hours or email them directly.,English,"faculty, support",2026-04-06
+KB_006,Faculty Contact,office hours,പ്രൊഫസറെ എങ്ങനെ ബന്ധപ്പെടാം?,"പ്രൊഫസർ, contact, faculty",ഓഫീസ് സമയങ്ങളിൽ നിങ്ങൾക്ക് പ്രൊഫസറെ നേരിട്ട് കാണാം അല്ലെങ്കിൽ ഇമെയിൽ അയക്കാവുന്നതാണ്.,Malayalam,"faculty, support",2026-04-06
