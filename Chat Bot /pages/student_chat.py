@@ -3,16 +3,12 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from audio_recorder_streamlit import audio_recorder
-from openai import OpenAI
+import speech_recognition as sr
 import os
 import datetime
 import csv
 
 st.title("🎓 Student Academic Assistant")
-
-# --- OPENAI SETUP FOR VOICE ---
-# IMPORTANT: Replace this with your actual OpenAI API key
-client = OpenAI(api_key="YOUR_OPENAI_API_KEY") 
 
 @st.cache_data
 def load_kb():
@@ -53,8 +49,13 @@ for message in st.session_state.messages:
 
 user_query = None
 
-# --- VOICE INPUT ---
+# --- VOICE INPUT (FREE GOOGLE API) ---
 st.write("🎤 **Record your question:**")
+
+# Optional: Let the user choose the language they are speaking!
+spoken_language = st.radio("Select spoken language:", ("English", "Malayalam"), horizontal=True)
+lang_code = "en-IN" if spoken_language == "English" else "ml-IN"
+
 audio_bytes = audio_recorder(text="Click to talk", recording_color="#e8b125", neutral_color="#6aa36f")
 
 if audio_bytes:
@@ -63,15 +64,21 @@ if audio_bytes:
     st.success("Audio captured! Transcribing...")
     
     try:
-        with open("temp_audio.wav", "rb") as audio_file:
-            transcript = client.audio.transcriptions.create(
-                model="whisper-1", 
-                file=audio_file
-            )
-        user_query = transcript.text
+        # Initialize the recognizer
+        recognizer = sr.Recognizer()
+        with sr.AudioFile("temp_audio.wav") as source:
+            audio_data = recognizer.record(source)
+            
+            # Use Google's free recognition endpoint
+            transcript = recognizer.recognize_google(audio_data, language=lang_code)
+            
+        user_query = transcript
         st.info(f"**You said:** {user_query}")
-    except Exception as e:
-        st.error("Voice transcription requires a valid OpenAI API key. Please check your setup.")
+    
+    except sr.UnknownValueError:
+        st.error("Sorry, I could not understand the audio. Please try again or type your question.")
+    except sr.RequestError as e:
+        st.error(f"Could not request results from Google Speech Recognition service; {e}")
 
 # --- TEXT INPUT ---
 text_input = st.chat_input("...or type your question here")

@@ -1,1 +1,12 @@
-timestamp,user_query,category,response,confidence,feedback
+timestamp,user_query,category,response,confidence,feedback2026-04-07 14:53:49,Hi ,Unknown,I'm not completely sure. Could you rephrase?,0.0,Pending
+2026-04-07 14:54:05,Hostel rent?,Hostel,"Hostel Food 
+Chicken - Sun 
+Fish - Sat 
+Veg - Rest all days",54.9,Pending
+2026-04-07 14:54:17,How much is the hostel rent?,Hostel,Fees is 15K per month. ,64.9,Pending
+2026-04-07 14:54:31,How can I reach the faculty?,Faculty Contact,You can meet the faculty during their designated office hours or email them directly.,42.9,Pending
+2026-04-07 14:54:46,Where is the collage location?,Hostel,"Hostel Food 
+Chicken - Sun 
+Fish - Sat 
+Veg - Rest all days",29.4,Pending
+2026-04-07 14:56:36,അവസാന പരീക്ഷ എപ്പോഴാണ്?,Examination Policy,അവസാന സെമസ്റ്റർ പരീക്ഷാ ഷെഡ്യൂൾ വിദ്യാർത്ഥി പോർട്ടലിൽ പ്രഖ്യാപിക്കും.,75.3,Pending
