@@ -1,8 +1,11 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.subplots as subplots
+import matplotlib.pyplot as plt
 import os
 
 KB_FILE_PATH = "data/knowledge_base.csv"
+LOG_FILE_PATH = "data/chat_logs.csv"
 
 # --- AUTHENTICATION WALL ---
 if "admin_logged_in" not in st.session_state:
@@ -15,7 +18,7 @@ if not st.session_state.admin_logged_in:
     password = st.text_input("Password", type="password")
     
     if st.button("Login"):
-        if password == "admin123": # Change this password as needed!
+        if password == "admin123":
             st.session_state.admin_logged_in = True
             st.rerun()
         else:
@@ -29,10 +32,37 @@ st.button("Logout", on_click=lambda: st.session_state.update(admin_logged_in=Fal
 tab1, tab2, tab3, tab4 = st.tabs(["📊 Analytics", "📝 Edit Knowledge Base", "💬 Chat Logs", "📤 Bulk Upload"])
 
 with tab1:
-    st.header("Chatbot Performance")
-    st.metric(label="Total Queries Today", value="142", delta="12")
-    st.metric(label="Low Confidence Queries", value="5", delta="-2")
-    st.info("Visual charts using matplotlib will be placed here.")
+    st.header("📊 Real-Time Chatbot Performance")
+    
+    if os.path.exists(LOG_FILE_PATH):
+        logs_df = pd.read_csv(LOG_FILE_PATH)
+        
+        if not logs_df.empty:
+            total_queries = len(logs_df)
+            low_confidence_count = len(logs_df[logs_df['confidence'] < 20.0])
+            avg_confidence = round(logs_df['confidence'].mean(), 1)
+            
+            col1, col2, col3 = st.columns(3)
+            col1.metric("Total Queries", total_queries)
+            col2.metric("Low Confidence (<20%)", low_confidence_count)
+            col3.metric("Avg Confidence Score", f"{avg_confidence}%")
+            
+            st.divider()
+            
+            st.subheader("Queries by Academic Category")
+            category_counts = logs_df['category'].value_counts()
+            
+            fig, ax = plt.subplots(figsize=(7, 4))
+            ax.bar(category_counts.index, category_counts.values, color='#4CAF50')
+            ax.set_ylabel("Number of Queries")
+            ax.set_title("Most Common Questions")
+            plt.xticks(rotation=45)
+            
+            st.pyplot(fig)
+        else:
+            st.info("No chat logs recorded yet. Ask the bot a question!")
+    else:
+        st.warning("Chat log database not found.")
 
 with tab2:
     st.header("Manage Questions")
@@ -51,8 +81,13 @@ with tab2:
         st.error("Cannot find knowledge_base.csv.")
 
 with tab3:
-    st.header("Recent User Chats")
-    st.write("Review recent chat logs and user feedback here.")
+    st.header("💬 Recent User Chats")
+    st.write("Review recent chat logs and user interactions.")
+    if os.path.exists(LOG_FILE_PATH):
+        logs_df = pd.read_csv(LOG_FILE_PATH)
+        st.dataframe(logs_df.tail(20).iloc[::-1]) # Shows the 20 most recent logs, newest first
+    else:
+        st.write("No logs available yet.")
 
 with tab4:
     st.header("📤 Bulk Upload Knowledge Base")
