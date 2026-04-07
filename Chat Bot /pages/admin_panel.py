@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.subplots as subplots
 import matplotlib.pyplot as plt
 import os
 
